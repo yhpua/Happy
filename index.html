@@ -2976,7 +2976,8 @@ Frac of new info (AI_R2)     0.607  0.317 0.829</code></pre>
 </section>
 <section id="acknowledgement" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="acknowledgement">Acknowledgement</h2>
-<p>Special thanks to Prof Harrell for his guidance and his suggestion to create this vignette. All mistakes in this vignette, however, are mine.</p>
+<p>Special thanks to Prof Harrell for his guidance and his suggestion to create this online vignette. All mistakes in this vignette, however, are mine.</p>
+<p>Happy using <code>Happy</code> 🙂</p>
 <div class="callout-tip column-page callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -3649,316 +3650,318 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a><span class="fu">## Acknowledgement   </span></span>
-<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>Special thanks to Prof Harrell for his guidance and his suggestion to create this  vignette. All mistakes in this vignette, however, are mine.  </span>
-<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>Special thanks to Prof Harrell for his guidance and his suggestion to create this online vignette. All mistakes in this  vignette, however, are mine.  </span>
+<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a>Happy using <span class="in">`Happy`</span> 🙂  </span>
+<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip .column-page collapse=&quot;true&quot;}</span>
-<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a><span class="fu">## Happy.R</span></span>
-<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Harrell&#39;s added predictive performance yardstick (Happy) </span></span>
+<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip .column-page collapse=&quot;true&quot;}</span>
+<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a><span class="fu">## Happy.R</span></span>
+<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
 <span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Compute the various added predictive performance yardsticks/indexes for binary/ordinal outcome models. This function is inspired by </span></span>
-<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Prof Harrell&#39;s thoughtful and thought-provoking blog article https://www.fharrell.com/post/addvalue/ </span></span>
-<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Summary</span></span>
-<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Yardstick 1:  U-statistic test, implemented in Hmisc::rcorrp.cens(), assesses whether the expanded model with the new predictor(s) gives </span></span>
-<span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; predictions that are more concordant with the binary outcome than do the base model. </span></span>
-<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Warning: Whilst this test is an improvement over taking the difference between two c-indexes, it is less powerful than its LR-based counterparts.   </span></span>
-<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Yardstick 2: LR chi-squared test formally compares the base model with the expanded model which includes the new predictor(s)   </span></span>
+<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Harrell&#39;s added predictive performance yardstick (Happy) </span></span>
+<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Compute the various added predictive performance yardsticks/indexes for binary/ordinal outcome models. This function is inspired by </span></span>
+<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Prof Harrell&#39;s thoughtful and thought-provoking blog article https://www.fharrell.com/post/addvalue/ </span></span>
+<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Summary</span></span>
+<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Yardstick 1:  U-statistic test, implemented in Hmisc::rcorrp.cens(), assesses whether the expanded model with the new predictor(s) gives </span></span>
+<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; predictions that are more concordant with the binary outcome than do the base model. </span></span>
+<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Warning: Whilst this test is an improvement over taking the difference between two c-indexes, it is less powerful than its LR-based counterparts.   </span></span>
 <span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Yardstick 3: Adequacy Index: Ratio of LR_base/LR_expanded evaluates adequacy of the base model that excludes the new predictor(s)  </span></span>
+<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Yardstick 2: LR chi-squared test formally compares the base model with the expanded model which includes the new predictor(s)   </span></span>
 <span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Yardstick 4: Relative Explained Variation (REV): Ratio of variances of predicted values before and after adding the new predictor(s) to </span></span>
-<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; the base model. (1 - REV) gives the proportion of the total explained variation of the outcome that is explained by the new predictor(s)</span></span>
-<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Yardstick 5 (experimental!): R^2-based Adequacy Index: Ratio of R^2_base/R^2_expanded evaluates adequacy of the base model, </span></span>
-<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; where R^2 refers to the modified adjusted Maddala-Cox-Snell (MCS) R^2 value with (i) overfitting (regression parameter)</span></span>
-<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; adjustment and (ii) effective sample size adjustment </span></span>
-<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;  </span></span>
+<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Yardstick 3: Adequacy Index: Ratio of LR_base/LR_expanded evaluates adequacy of the base model that excludes the new predictor(s)  </span></span>
+<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Yardstick 4: Relative Explained Variation (REV): Ratio of variances of predicted values before and after adding the new predictor(s) to </span></span>
+<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; the base model. (1 - REV) gives the proportion of the total explained variation of the outcome that is explained by the new predictor(s)</span></span>
+<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Yardstick 5 (experimental!): R^2-based Adequacy Index: Ratio of R^2_base/R^2_expanded evaluates adequacy of the base model, </span></span>
+<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; where R^2 refers to the modified adjusted Maddala-Cox-Snell (MCS) R^2 value with (i) overfitting (regression parameter)</span></span>
+<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; adjustment and (ii) effective sample size adjustment </span></span>
 <span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @title Harrell&#39;s added predictive performance yardstick (Happy)</span></span>
-<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param m1           An object of class \code{lrm} or \code{orm} representing a base model or an expanded model that includes `var_comp`</span></span>
-<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param var_comp     a formula with no left hand side variable, specifying the new or competing predictor(s) </span></span>
-<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param B            number of bootstrap resamples to do to get confidence intervals for the Adequacy Index and Relative Explained Variation  </span></span>
-<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param kint         single integer specifying the number of the intercept to use in multiple-intercept (ordinal) models. The default is 1 for `lrm` models </span></span>
-<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return</span></span>
-<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
-<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
-<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
-<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a>Happy <span class="ot">&lt;-</span> <span class="cf">function</span> (m1, <span class="at">var_comp =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="dv">0</span>, <span class="at">kint =</span> <span class="dv">1</span>) {</span>
-<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Ensure that lrm and orm objects are supplied</span></span>
-<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">any</span>(<span class="fu">class</span>(m1) <span class="sc">%in%</span> <span class="fu">Cs</span>(lrm, orm))) {</span>
-<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&#39;m1 must be of class lrm or orm&#39;</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Extract formula and term.labels from m1 and var_comp</span></span>
-<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a>  m1_formula <span class="ot">&lt;-</span> m1<span class="sc">$</span>sformula</span>
-<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a>  tl_m1 <span class="ot">&lt;-</span> <span class="fu">attr</span>(<span class="fu">terms</span>(m1_formula), <span class="st">&quot;term.labels&quot;</span>) </span>
-<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a>  tl_m2 <span class="ot">&lt;-</span> <span class="fu">attr</span>(<span class="fu">terms</span>(var_comp), <span class="st">&quot;term.labels&quot;</span>) </span>
-<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>( <span class="fu">length</span>(tl_m2) <span class="sc">&gt;</span> <span class="dv">1</span> ) </span>
-<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ( <span class="fu">length</span> (<span class="fu">setdiff</span>(tl_m1, tl_m2)) <span class="sc">==</span> <span class="dv">0</span> ) </span>
-<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span> (<span class="st">&quot;m1 and var_comp are the same&quot;</span> )</span>
-<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>( <span class="fu">length</span>(tl_m2) <span class="sc">&gt;</span> <span class="dv">1</span> ) </span>
-<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(tl_m2 <span class="sc">%in%</span> tl_m1) <span class="sc">&amp;</span> <span class="fu">any</span>(tl_m2 <span class="sc">%in%</span> tl_m1)) </span>
-<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span> (<span class="st">&quot;some var_comp terms are not found in m1&quot;</span> )</span>
-<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">all</span>(tl_m2 <span class="sc">%in%</span> tl_m1)) {</span>
-<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a>    <span class="fu">warning</span> (<span class="st">&quot;var_comp found in m1&quot;</span>)</span>
-<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a>    modA_formula  <span class="ot">&lt;-</span> <span class="fu">update</span>(m1<span class="sc">$</span>sformula, <span class="fu">paste</span>(<span class="st">&quot;. ~ &quot;</span>,  <span class="fu">paste</span> (<span class="fu">setdiff</span>(tl_m1, tl_m2), <span class="at">collapse =</span> <span class="st">&quot; + &quot;</span>  )))</span>
-<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a>    modAB_formula <span class="ot">&lt;-</span> m1_formula   </span>
-<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;  </span></span>
+<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @title Harrell&#39;s added predictive performance yardstick (Happy)</span></span>
+<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param m1           An object of class \code{lrm} or \code{orm} representing a base model or an expanded model that includes `var_comp`</span></span>
+<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param var_comp     a formula with no left hand side variable, specifying the new or competing predictor(s) </span></span>
+<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param B            number of bootstrap resamples to do to get confidence intervals for the Adequacy Index and Relative Explained Variation  </span></span>
+<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param kint         single integer specifying the number of the intercept to use in multiple-intercept (ordinal) models. The default is 1 for `lrm` models </span></span>
+<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return</span></span>
+<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
+<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a>Happy <span class="ot">&lt;-</span> <span class="cf">function</span> (m1, <span class="at">var_comp =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="dv">0</span>, <span class="at">kint =</span> <span class="dv">1</span>) {</span>
+<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Ensure that lrm and orm objects are supplied</span></span>
+<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">any</span>(<span class="fu">class</span>(m1) <span class="sc">%in%</span> <span class="fu">Cs</span>(lrm, orm))) {</span>
+<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&#39;m1 must be of class lrm or orm&#39;</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Extract formula and term.labels from m1 and var_comp</span></span>
+<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a>  m1_formula <span class="ot">&lt;-</span> m1<span class="sc">$</span>sformula</span>
+<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>  tl_m1 <span class="ot">&lt;-</span> <span class="fu">attr</span>(<span class="fu">terms</span>(m1_formula), <span class="st">&quot;term.labels&quot;</span>) </span>
+<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a>  tl_m2 <span class="ot">&lt;-</span> <span class="fu">attr</span>(<span class="fu">terms</span>(var_comp), <span class="st">&quot;term.labels&quot;</span>) </span>
+<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>( <span class="fu">length</span>(tl_m2) <span class="sc">&gt;</span> <span class="dv">1</span> ) </span>
+<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ( <span class="fu">length</span> (<span class="fu">setdiff</span>(tl_m1, tl_m2)) <span class="sc">==</span> <span class="dv">0</span> ) </span>
+<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span> (<span class="st">&quot;m1 and var_comp are the same&quot;</span> )</span>
+<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>( <span class="fu">length</span>(tl_m2) <span class="sc">&gt;</span> <span class="dv">1</span> ) </span>
+<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(tl_m2 <span class="sc">%in%</span> tl_m1) <span class="sc">&amp;</span> <span class="fu">any</span>(tl_m2 <span class="sc">%in%</span> tl_m1)) </span>
+<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span> (<span class="st">&quot;some var_comp terms are not found in m1&quot;</span> )</span>
+<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">all</span>(tl_m2 <span class="sc">%in%</span> tl_m1)) {</span>
+<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a>    <span class="fu">warning</span> (<span class="st">&quot;var_comp found in m1&quot;</span>)</span>
+<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a>    modA_formula  <span class="ot">&lt;-</span> <span class="fu">update</span>(m1<span class="sc">$</span>sformula, <span class="fu">paste</span>(<span class="st">&quot;. ~ &quot;</span>,  <span class="fu">paste</span> (<span class="fu">setdiff</span>(tl_m1, tl_m2), <span class="at">collapse =</span> <span class="st">&quot; + &quot;</span>  )))</span>
+<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a>    modAB_formula <span class="ot">&lt;-</span> m1_formula   </span>
 <span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a>    modA_formula  <span class="ot">&lt;-</span> m1_formula</span>
-<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a>    modAB_formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span> (<span class="fu">paste</span>( <span class="fu">deparse</span>(m1_formula),  <span class="fu">as.character</span>(var_comp)[<span class="sc">-</span><span class="dv">1</span>], <span class="at">sep =</span> <span class="st">&quot;+&quot;</span> ))</span>
-<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Generate dataset with no missing values</span></span>
-<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a>  mydata <span class="ot">=</span> m1<span class="sc">$</span>call<span class="sc">$</span>data</span>
-<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a>  mydata <span class="ot">=</span> <span class="fu">eval</span> (mydata) [ , <span class="fu">all.vars</span>(modAB_formula)]</span>
-<span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a>  mydata <span class="ot">&lt;-</span> mydata [<span class="fu">complete.cases</span>(mydata), ]</span>
-<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; create all models</span></span>
-<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a>  mod_A  <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">lrm</span>(modA_formula, <span class="at">data =</span> mydata), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a>  mod_AB <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">lrm</span>(modAB_formula, <span class="at">data =</span> mydata), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(mod_A<span class="sc">$</span>fail) <span class="sc">&amp;&amp;</span> mod_A<span class="sc">$</span>fail) <span class="fu">stop</span> (<span class="st">&quot;Unable to fit base model&quot;</span>)</span>
-<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(mod_AB<span class="sc">$</span>fail) <span class="sc">&amp;&amp;</span> mod_AB<span class="sc">$</span>fail) <span class="fu">stop</span> (<span class="st">&quot;Unable to fit expanded model&quot;</span>)</span>
-<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; ensure valid kint values </span></span>
-<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a>  yunique  <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>( mydata[,<span class="dv">1</span>] ))[<span class="sc">-</span><span class="dv">1</span>]  <span class="co"># remove lowest level to match kint</span></span>
-<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a>  isbinary <span class="ot">&lt;-</span> <span class="fu">length</span>(yunique) <span class="sc">==</span> <span class="dv">1</span></span>
-<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (kint <span class="sc">&lt;</span> <span class="dv">1</span>) <span class="fu">stop</span> (<span class="st">&quot;kint is a positive integer&quot;</span>)</span>
-<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (isbinary) kint <span class="ot">&lt;-</span> <span class="dv">1</span> </span>
-<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>isbinary <span class="sc">&amp;</span> kint <span class="sc">&gt;</span> <span class="fu">length</span>(yunique) ) <span class="fu">stop</span> (<span class="st">&quot;kint exceeds max outcome levels&quot;</span>)</span>
-<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; plogis() to get predicted Y</span></span>
-<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a>  Ypred_A  <span class="ot">&lt;-</span> <span class="fu">plogis</span>(<span class="fu">predict</span>(mod_A, <span class="at">kint =</span> kint)) </span>
-<span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a>  Ypred_AB <span class="ot">&lt;-</span> <span class="fu">plogis</span>(<span class="fu">predict</span>(mod_AB, <span class="at">kint =</span> kint)) </span>
-<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Yardstick 1: U-statistic test to assess concordance of mod_A and mod_AB with binary outcome </span></span>
-<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a>  rr <span class="ot">&lt;-</span> <span class="fu">rcorrp.cens</span>( Ypred_AB, Ypred_A,</span>
-<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a>                     <span class="cf">if</span> (<span class="sc">!</span>isbinary) <span class="fu">ifelse</span> (mydata[,<span class="dv">1</span>] <span class="sc">&gt;=</span> yunique[kint], <span class="dv">1</span>, <span class="dv">0</span>)  <span class="cf">else</span> mydata[,<span class="dv">1</span>])</span>
-<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a>  concord_p <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fu">abs</span> ( rr[[<span class="st">&#39;Dxy&#39;</span>]] <span class="sc">/</span> rr[[<span class="st">&#39;S.D.&#39;</span>]] ) )    </span>
-<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Yardstick 2: LRx2 test to evaluate incremental prognostic/predictive value of mod_B above mod_A</span></span>
-<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a>  ltest <span class="ot">&lt;-</span> <span class="fu">try</span>(rms<span class="sc">::</span><span class="fu">lrtest</span>(mod_A, mod_AB), <span class="at">silent=</span><span class="cn">TRUE</span>)</span>
-<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Yardstick 3: Adequacy Index  = LR_A / LR_AB</span></span>
-<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Yardstick 4: Relative Explained Variation (REV) derived from variance of predicted probabilities </span></span>
-<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Yardstick 4: Proportion of prognostic information of expanded model (modd_AB) that is attributed to var_A</span></span>
-<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a>  hrev_fun <span class="ot">&lt;-</span> <span class="cf">function</span> (ma, mab, <span class="at">kint =</span> kint) {</span>
+<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a>    modA_formula  <span class="ot">&lt;-</span> m1_formula</span>
+<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a>    modAB_formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span> (<span class="fu">paste</span>( <span class="fu">deparse</span>(m1_formula),  <span class="fu">as.character</span>(var_comp)[<span class="sc">-</span><span class="dv">1</span>], <span class="at">sep =</span> <span class="st">&quot;+&quot;</span> ))</span>
+<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Generate dataset with no missing values</span></span>
+<span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a>  mydata <span class="ot">=</span> m1<span class="sc">$</span>call<span class="sc">$</span>data</span>
+<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a>  mydata <span class="ot">=</span> <span class="fu">eval</span> (mydata) [ , <span class="fu">all.vars</span>(modAB_formula)]</span>
+<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a>  mydata <span class="ot">&lt;-</span> mydata [<span class="fu">complete.cases</span>(mydata), ]</span>
+<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; create all models</span></span>
+<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a>  mod_A  <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">lrm</span>(modA_formula, <span class="at">data =</span> mydata), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a>  mod_AB <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">lrm</span>(modAB_formula, <span class="at">data =</span> mydata), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(mod_A<span class="sc">$</span>fail) <span class="sc">&amp;&amp;</span> mod_A<span class="sc">$</span>fail) <span class="fu">stop</span> (<span class="st">&quot;Unable to fit base model&quot;</span>)</span>
+<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(mod_AB<span class="sc">$</span>fail) <span class="sc">&amp;&amp;</span> mod_AB<span class="sc">$</span>fail) <span class="fu">stop</span> (<span class="st">&quot;Unable to fit expanded model&quot;</span>)</span>
+<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; ensure valid kint values </span></span>
+<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a>  yunique  <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>( mydata[,<span class="dv">1</span>] ))[<span class="sc">-</span><span class="dv">1</span>]  <span class="co"># remove lowest level to match kint</span></span>
+<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a>  isbinary <span class="ot">&lt;-</span> <span class="fu">length</span>(yunique) <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (kint <span class="sc">&lt;</span> <span class="dv">1</span>) <span class="fu">stop</span> (<span class="st">&quot;kint is a positive integer&quot;</span>)</span>
+<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (isbinary) kint <span class="ot">&lt;-</span> <span class="dv">1</span> </span>
+<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>isbinary <span class="sc">&amp;</span> kint <span class="sc">&gt;</span> <span class="fu">length</span>(yunique) ) <span class="fu">stop</span> (<span class="st">&quot;kint exceeds max outcome levels&quot;</span>)</span>
+<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; plogis() to get predicted Y</span></span>
+<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a>  Ypred_A  <span class="ot">&lt;-</span> <span class="fu">plogis</span>(<span class="fu">predict</span>(mod_A, <span class="at">kint =</span> kint)) </span>
+<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a>  Ypred_AB <span class="ot">&lt;-</span> <span class="fu">plogis</span>(<span class="fu">predict</span>(mod_AB, <span class="at">kint =</span> kint)) </span>
+<span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Yardstick 1: U-statistic test to assess concordance of mod_A and mod_AB with binary outcome </span></span>
+<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a>  rr <span class="ot">&lt;-</span> <span class="fu">rcorrp.cens</span>( Ypred_AB, Ypred_A,</span>
+<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a>                     <span class="cf">if</span> (<span class="sc">!</span>isbinary) <span class="fu">ifelse</span> (mydata[,<span class="dv">1</span>] <span class="sc">&gt;=</span> yunique[kint], <span class="dv">1</span>, <span class="dv">0</span>)  <span class="cf">else</span> mydata[,<span class="dv">1</span>])</span>
+<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a>  concord_p <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fu">abs</span> ( rr[[<span class="st">&#39;Dxy&#39;</span>]] <span class="sc">/</span> rr[[<span class="st">&#39;S.D.&#39;</span>]] ) )    </span>
+<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Yardstick 2: LRx2 test to evaluate incremental prognostic/predictive value of mod_B above mod_A</span></span>
+<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a>  ltest <span class="ot">&lt;-</span> <span class="fu">try</span>(rms<span class="sc">::</span><span class="fu">lrtest</span>(mod_A, mod_AB), <span class="at">silent=</span><span class="cn">TRUE</span>)</span>
+<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Yardstick 3: Adequacy Index  = LR_A / LR_AB</span></span>
+<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Yardstick 4: Relative Explained Variation (REV) derived from variance of predicted probabilities </span></span>
+<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; Yardstick 4: Proportion of prognostic information of expanded model (modd_AB) that is attributed to var_A</span></span>
 <span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute Adequacy Index (AI) and Relative Explained Variation (REV)</span></span>
-<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a>    dev_a   <span class="ot">&lt;-</span> <span class="fu">deviance</span>(ma)</span>
-<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a>    dev0_a  <span class="ot">&lt;-</span> dev_a[<span class="dv">1</span>]</span>
-<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a>    dev_a   <span class="ot">&lt;-</span> dev_a[<span class="fu">length</span>(dev_a)]</span>
-<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a>    LR_a    <span class="ot">&lt;-</span> dev0_a <span class="sc">-</span> dev_a</span>
-<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a>    dev_ab   <span class="ot">&lt;-</span> <span class="fu">deviance</span>(mab)</span>
-<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a>    dev0_ab  <span class="ot">&lt;-</span> dev_ab[<span class="dv">1</span>]</span>
-<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a>    dev_ab   <span class="ot">&lt;-</span> dev_ab[<span class="fu">length</span>(dev_ab)]</span>
-<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a>    LR_ab    <span class="ot">&lt;-</span> dev0_ab <span class="sc">-</span> dev_ab</span>
-<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a>    ma_var   <span class="ot">&lt;-</span> <span class="fu">var</span>(<span class="fu">plogis</span>(<span class="fu">predict</span>(ma,  <span class="at">kint =</span> kint)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a>    mab_var  <span class="ot">&lt;-</span> <span class="fu">var</span>(<span class="fu">plogis</span>(<span class="fu">predict</span>(mab, <span class="at">kint =</span> kint)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute modified adjusted MCS R^2</span></span>
-<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a>    ytable_a <span class="ot">&lt;-</span> ma<span class="sc">$</span>freq</span>
-<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a>    ytable_ab <span class="ot">&lt;-</span> mab<span class="sc">$</span>freq</span>
-<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a>    kint_a <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">names</span>(ytable_a)) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a>    kint_ab <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">names</span>(ytable_ab)) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a>    df_a <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">coef</span>(ma))</span>
-<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a>    df_ab <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">coef</span>(ma))</span>
-<span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a>    p_a  <span class="ot">&lt;-</span> df_a  <span class="sc">-</span> kint_a</span>
-<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a>    p_ab <span class="ot">&lt;-</span> df_ab <span class="sc">-</span> kint_ab</span>
-<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;-</span> ma<span class="sc">$</span>stats[<span class="st">&quot;Obs&quot;</span>]</span>
-<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a>    r2m_a <span class="ot">&lt;-</span>  Hmisc<span class="sc">::</span><span class="fu">R2Measures</span>(LR_a,   p_a,  n, ytable_a)</span>
-<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a>    r2m_ab <span class="ot">&lt;-</span> Hmisc<span class="sc">::</span><span class="fu">R2Measures</span>(LR_ab, p_ab, n, ytable_ab)</span>
-<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span> (<span class="st">`</span><span class="at">LR-based Adequacy Index</span><span class="st">`</span>     <span class="ot">=</span> LR_a<span class="sc">/</span>LR_ab,</span>
-<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">Frac of new info (AI_LR)</span><span class="st">`</span>       <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (LR_a<span class="sc">/</span>LR_ab),</span>
-<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">Relative explained variation</span><span class="st">`</span><span class="ot">=</span> ma_var<span class="sc">/</span>mab_var, </span>
-<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">Frac of new info (REV)</span><span class="st">`</span>      <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (ma_var<span class="sc">/</span>mab_var),</span>
-<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">R^2-based Adequacy Index</span><span class="st">`</span>     <span class="ot">=</span> r2m_a[<span class="dv">4</span>]<span class="sc">/</span>r2m_ab[<span class="dv">4</span>],</span>
-<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">Frac of new info (AI_R2)</span><span class="st">`</span>       <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (r2m_a[<span class="dv">4</span>]<span class="sc">/</span>r2m_ab[<span class="dv">4</span>]),</span>
-<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a>                <span class="at">check.names=</span><span class="cn">FALSE</span>)</span>
-<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; B &gt; 0, bootstrap AI and REV (Yardsticks 3 and 4)</span></span>
-<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a>  nboot <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a>  boot  <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="cn">NA</span>, <span class="fu">c</span>(B, <span class="dv">6</span>),</span>
-<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dimnames=</span><span class="fu">list</span>(<span class="cn">NULL</span>, </span>
-<span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">c</span>(<span class="st">&#39;AI&#39;</span>, <span class="st">&#39;Frac_AI&#39;</span>, <span class="st">&#39;REV&#39;</span>, <span class="st">&#39;Frac_REV&#39;</span>, <span class="st">&#39;R2_AI&#39;</span>, <span class="st">&#39;R2_Frac_AI&#39;</span>)))</span>
-<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-340"><a href="#cb16-340" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(B <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb16-341"><a href="#cb16-341" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> B) {</span>
-<span id="cb16-342"><a href="#cb16-342" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb16-343"><a href="#cb16-343" aria-hidden="true" tabindex="-1"></a>      j   <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(mydata), <span class="fu">nrow</span>(mydata), <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a>      mydat <span class="ot">&lt;-</span> mydata[j, ]</span>
-<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a>      <span class="co"># fit bootstrap models</span></span>
-<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a>      bmod_A  <span class="ot">&lt;-</span>   <span class="fu">lrm</span>(modA_formula, <span class="at">data =</span> mydat)</span>
-<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a>      bmod_AB <span class="ot">&lt;-</span>   <span class="fu">lrm</span>(modAB_formula, <span class="at">data =</span> mydat)</span>
-<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">length</span>(bmod_A<span class="sc">$</span>fail) <span class="sc">&amp;&amp;</span> bmod_A<span class="sc">$</span>fail)   <span class="cf">next</span></span>
-<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">length</span>(bmod_AB<span class="sc">$</span>fail) <span class="sc">&amp;&amp;</span> bmod_AB<span class="sc">$</span>fail) <span class="cf">next</span></span>
-<span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a>      nboot <span class="ot">&lt;-</span> nboot <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a>      boot[nboot, ]         <span class="ot">&lt;-</span>  <span class="fu">as.matrix</span>(<span class="fu">hrev_fun</span>(bmod_A, bmod_AB, <span class="at">kint =</span> kint))</span>
-<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(nboot <span class="sc">&lt;</span> B) boot <span class="ot">&lt;-</span> boot[<span class="dv">1</span> <span class="sc">:</span> nboot,  , drop<span class="ot">=</span><span class="cn">FALSE</span>]</span>
+<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a>  hrev_fun <span class="ot">&lt;-</span> <span class="cf">function</span> (ma, mab, <span class="at">kint =</span> kint) {</span>
+<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute Adequacy Index (AI) and Relative Explained Variation (REV)</span></span>
+<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a>    dev_a   <span class="ot">&lt;-</span> <span class="fu">deviance</span>(ma)</span>
+<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a>    dev0_a  <span class="ot">&lt;-</span> dev_a[<span class="dv">1</span>]</span>
+<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a>    dev_a   <span class="ot">&lt;-</span> dev_a[<span class="fu">length</span>(dev_a)]</span>
+<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a>    LR_a    <span class="ot">&lt;-</span> dev0_a <span class="sc">-</span> dev_a</span>
+<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a>    dev_ab   <span class="ot">&lt;-</span> <span class="fu">deviance</span>(mab)</span>
+<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a>    dev0_ab  <span class="ot">&lt;-</span> dev_ab[<span class="dv">1</span>]</span>
+<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a>    dev_ab   <span class="ot">&lt;-</span> dev_ab[<span class="fu">length</span>(dev_ab)]</span>
+<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a>    LR_ab    <span class="ot">&lt;-</span> dev0_ab <span class="sc">-</span> dev_ab</span>
+<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a>    ma_var   <span class="ot">&lt;-</span> <span class="fu">var</span>(<span class="fu">plogis</span>(<span class="fu">predict</span>(ma,  <span class="at">kint =</span> kint)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a>    mab_var  <span class="ot">&lt;-</span> <span class="fu">var</span>(<span class="fu">plogis</span>(<span class="fu">predict</span>(mab, <span class="at">kint =</span> kint)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute modified adjusted MCS R^2</span></span>
+<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a>    ytable_a <span class="ot">&lt;-</span> ma<span class="sc">$</span>freq</span>
+<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a>    ytable_ab <span class="ot">&lt;-</span> mab<span class="sc">$</span>freq</span>
+<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a>    kint_a <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">names</span>(ytable_a)) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a>    kint_ab <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">names</span>(ytable_ab)) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a>    df_a <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">coef</span>(ma))</span>
+<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a>    df_ab <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">coef</span>(ma))</span>
+<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a>    p_a  <span class="ot">&lt;-</span> df_a  <span class="sc">-</span> kint_a</span>
+<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a>    p_ab <span class="ot">&lt;-</span> df_ab <span class="sc">-</span> kint_ab</span>
+<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;-</span> ma<span class="sc">$</span>stats[<span class="st">&quot;Obs&quot;</span>]</span>
+<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a>    r2m_a <span class="ot">&lt;-</span>  Hmisc<span class="sc">::</span><span class="fu">R2Measures</span>(LR_a,   p_a,  n, ytable_a)</span>
+<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a>    r2m_ab <span class="ot">&lt;-</span> Hmisc<span class="sc">::</span><span class="fu">R2Measures</span>(LR_ab, p_ab, n, ytable_ab)</span>
+<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span> (<span class="st">`</span><span class="at">LR-based Adequacy Index</span><span class="st">`</span>     <span class="ot">=</span> LR_a<span class="sc">/</span>LR_ab,</span>
+<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">Frac of new info (AI_LR)</span><span class="st">`</span>       <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (LR_a<span class="sc">/</span>LR_ab),</span>
+<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">Relative explained variation</span><span class="st">`</span><span class="ot">=</span> ma_var<span class="sc">/</span>mab_var, </span>
+<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">Frac of new info (REV)</span><span class="st">`</span>      <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (ma_var<span class="sc">/</span>mab_var),</span>
+<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">R^2-based Adequacy Index</span><span class="st">`</span>     <span class="ot">=</span> r2m_a[<span class="dv">4</span>]<span class="sc">/</span>r2m_ab[<span class="dv">4</span>],</span>
+<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">Frac of new info (AI_R2)</span><span class="st">`</span>       <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (r2m_a[<span class="dv">4</span>]<span class="sc">/</span>r2m_ab[<span class="dv">4</span>]),</span>
+<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a>                <span class="at">check.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; B &gt; 0, bootstrap AI and REV (Yardsticks 3 and 4)</span></span>
+<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a>  nboot <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a>  boot  <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="cn">NA</span>, <span class="fu">c</span>(B, <span class="dv">6</span>),</span>
+<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dimnames=</span><span class="fu">list</span>(<span class="cn">NULL</span>, </span>
+<span id="cb16-340"><a href="#cb16-340" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">c</span>(<span class="st">&#39;AI&#39;</span>, <span class="st">&#39;Frac_AI&#39;</span>, <span class="st">&#39;REV&#39;</span>, <span class="st">&#39;Frac_REV&#39;</span>, <span class="st">&#39;R2_AI&#39;</span>, <span class="st">&#39;R2_Frac_AI&#39;</span>)))</span>
+<span id="cb16-341"><a href="#cb16-341" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-342"><a href="#cb16-342" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(B <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb16-343"><a href="#cb16-343" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> B) {</span>
+<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a>      j   <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(mydata), <span class="fu">nrow</span>(mydata), <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a>      mydat <span class="ot">&lt;-</span> mydata[j, ]</span>
+<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a>      <span class="co"># fit bootstrap models</span></span>
+<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a>      bmod_A  <span class="ot">&lt;-</span>   <span class="fu">lrm</span>(modA_formula, <span class="at">data =</span> mydat)</span>
+<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a>      bmod_AB <span class="ot">&lt;-</span>   <span class="fu">lrm</span>(modAB_formula, <span class="at">data =</span> mydat)</span>
+<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">length</span>(bmod_A<span class="sc">$</span>fail) <span class="sc">&amp;&amp;</span> bmod_A<span class="sc">$</span>fail)   <span class="cf">next</span></span>
+<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">length</span>(bmod_AB<span class="sc">$</span>fail) <span class="sc">&amp;&amp;</span> bmod_AB<span class="sc">$</span>fail) <span class="cf">next</span></span>
+<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a>      nboot <span class="ot">&lt;-</span> nboot <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a>      boot[nboot, ]         <span class="ot">&lt;-</span>  <span class="fu">as.matrix</span>(<span class="fu">hrev_fun</span>(bmod_A, bmod_AB, <span class="at">kint =</span> kint))</span>
+<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Consolidate test results</span></span>
+<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(nboot <span class="sc">&lt;</span> B) boot <span class="ot">&lt;-</span> boot[<span class="dv">1</span> <span class="sc">:</span> nboot,  , drop<span class="ot">=</span><span class="cn">FALSE</span>]</span>
+<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a>  stats <span class="ot">&lt;-</span></span>
-<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span> ( <span class="st">`</span><span class="at">U test Frac more concordant</span><span class="st">`</span>     <span class="ot">=</span> rr[<span class="st">&quot;x1 more concordant&quot;</span>] , </span>
-<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">U test  Pval</span><span class="st">`</span>                    <span class="ot">=</span> concord_p ,</span>
-<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">LR test Pval</span><span class="st">`</span>                    <span class="ot">=</span> ltest<span class="sc">$</span>stats[<span class="st">&quot;P&quot;</span>], </span>
-<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">hrev_fun</span>(mod_A, mod_AB, <span class="at">kint =</span> kint),</span>
-<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a>              <span class="at">check.names=</span><span class="cn">FALSE</span>)</span>
-<span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>( </span>
-<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
-<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a>      <span class="at">ypred_A  =</span> Ypred_A,</span>
-<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a>      <span class="at">ypred_AB =</span> Ypred_AB,</span>
-<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a>      <span class="at">mod_A    =</span> <span class="fu">as.character</span>(modA_formula)[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)],</span>
-<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a>      <span class="at">mod_B    =</span> <span class="fu">as.character</span>(var_comp)[<span class="sc">-</span><span class="dv">1</span>],</span>
-<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a>      <span class="at">stats    =</span> stats,</span>
-<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a>      <span class="at">nboot    =</span> nboot, </span>
-<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a>      <span class="at">boot     =</span> <span class="cf">if</span>(B <span class="sc">&gt;</span> <span class="dv">0</span>) boot),</span>
-<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">&#39;Happy&#39;</span>)</span>
-<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Print Result from Happy</span></span>
-<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param x </span></span>
-<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param ... </span></span>
-<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return</span></span>
-<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
-<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
-<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a>print.Happy <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a>  fA  <span class="ot">&lt;-</span> x<span class="sc">$</span>mod_A</span>
-<span id="cb16-397"><a href="#cb16-397" aria-hidden="true" tabindex="-1"></a>  fB  <span class="ot">&lt;-</span> x<span class="sc">$</span>mod_B</span>
-<span id="cb16-398"><a href="#cb16-398" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-399"><a href="#cb16-399" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Old Predictor(s): &quot;</span>)</span>
-<span id="cb16-400"><a href="#cb16-400" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(fA)</span>
-<span id="cb16-401"><a href="#cb16-401" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">New Predictor(s): &quot;</span>)</span>
-<span id="cb16-402"><a href="#cb16-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(fB)</span>
-<span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
-<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a>  fstats <span class="ot">&lt;-</span> x<span class="sc">$</span>stats</span>
-<span id="cb16-406"><a href="#cb16-406" aria-hidden="true" tabindex="-1"></a>  pcol   <span class="ot">&lt;-</span> <span class="fu">names</span>(fstats)[<span class="fu">grep</span>(<span class="st">&#39;Pval&#39;</span>, <span class="fu">names</span>(fstats))]  <span class="co"># pval columns</span></span>
-<span id="cb16-407"><a href="#cb16-407" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-408"><a href="#cb16-408" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; z() taken from print.ImpactPO</span></span>
-<span id="cb16-409"><a href="#cb16-409" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits=</span><span class="dv">0</span>, <span class="at">pval=</span><span class="cn">FALSE</span>) {</span>
-<span id="cb16-410"><a href="#cb16-410" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="cf">if</span>(pval) <span class="fu">ifelse</span>(x <span class="sc">&lt;</span> <span class="fl">0.0001</span>, <span class="st">&#39;&lt;0.0001&#39;</span>, <span class="fu">format</span>(<span class="fu">round</span>(x, <span class="dv">4</span>)))</span>
-<span id="cb16-411"><a href="#cb16-411" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="fu">format</span>(<span class="cf">if</span>(digits <span class="sc">==</span> <span class="dv">0</span>) x <span class="cf">else</span> <span class="fu">round</span>(x, digits))</span>
-<span id="cb16-412"><a href="#cb16-412" aria-hidden="true" tabindex="-1"></a>    y[<span class="fu">is.na</span>(x)] <span class="ot">&lt;-</span> <span class="st">&#39;&#39;</span></span>
-<span id="cb16-413"><a href="#cb16-413" aria-hidden="true" tabindex="-1"></a>    y</span>
-<span id="cb16-414"><a href="#cb16-414" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb16-415"><a href="#cb16-415" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-416"><a href="#cb16-416" aria-hidden="true" tabindex="-1"></a>  <span class="co"># fix formatting </span></span>
-<span id="cb16-417"><a href="#cb16-417" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> pcol)                          fstats[[j]] <span class="ot">&lt;-</span> <span class="fu">z</span>(fstats[[j]], <span class="at">pval =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-418"><a href="#cb16-418" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(fstats), pcol))  fstats[[j]] <span class="ot">&lt;-</span> <span class="fu">z</span>(fstats[[j]], <span class="dv">3</span>)</span>
-<span id="cb16-419"><a href="#cb16-419" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-420"><a href="#cb16-420" aria-hidden="true" tabindex="-1"></a>  fstats <span class="ot">&lt;-</span> <span class="fu">t</span>(fstats)</span>
-<span id="cb16-421"><a href="#cb16-421" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(fstats) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Values&quot;</span>)</span>
-<span id="cb16-422"><a href="#cb16-422" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-423"><a href="#cb16-423" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(x<span class="sc">$</span>nboot <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb16-424"><a href="#cb16-424" aria-hidden="true" tabindex="-1"></a>    boot <span class="ot">&lt;-</span> x<span class="sc">$</span>boot</span>
-<span id="cb16-425"><a href="#cb16-425" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-426"><a href="#cb16-426" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">head</span>(fstats, <span class="sc">-</span><span class="fu">dim</span>(boot)[[<span class="dv">2</span>]]), <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Consolidate test results</span></span>
+<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a>  stats <span class="ot">&lt;-</span></span>
+<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span> ( <span class="st">`</span><span class="at">U test Frac more concordant</span><span class="st">`</span>     <span class="ot">=</span> rr[<span class="st">&quot;x1 more concordant&quot;</span>] , </span>
+<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">U test  Pval</span><span class="st">`</span>                    <span class="ot">=</span> concord_p ,</span>
+<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">LR test Pval</span><span class="st">`</span>                    <span class="ot">=</span> ltest<span class="sc">$</span>stats[<span class="st">&quot;P&quot;</span>], </span>
+<span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">hrev_fun</span>(mod_A, mod_AB, <span class="at">kint =</span> kint),</span>
+<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a>              <span class="at">check.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>( </span>
+<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a>      <span class="at">ypred_A  =</span> Ypred_A,</span>
+<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a>      <span class="at">ypred_AB =</span> Ypred_AB,</span>
+<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a>      <span class="at">mod_A    =</span> <span class="fu">as.character</span>(modA_formula)[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)],</span>
+<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a>      <span class="at">mod_B    =</span> <span class="fu">as.character</span>(var_comp)[<span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a>      <span class="at">stats    =</span> stats,</span>
+<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a>      <span class="at">nboot    =</span> nboot, </span>
+<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a>      <span class="at">boot     =</span> <span class="cf">if</span>(B <span class="sc">&gt;</span> <span class="dv">0</span>) boot),</span>
+<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">&#39;Happy&#39;</span>)</span>
+<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Print Result from Happy</span></span>
+<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param x </span></span>
+<span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param ... </span></span>
+<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return</span></span>
+<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
+<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a>print.Happy <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb16-397"><a href="#cb16-397" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-398"><a href="#cb16-398" aria-hidden="true" tabindex="-1"></a>  fA  <span class="ot">&lt;-</span> x<span class="sc">$</span>mod_A</span>
+<span id="cb16-399"><a href="#cb16-399" aria-hidden="true" tabindex="-1"></a>  fB  <span class="ot">&lt;-</span> x<span class="sc">$</span>mod_B</span>
+<span id="cb16-400"><a href="#cb16-400" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-401"><a href="#cb16-401" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Old Predictor(s): &quot;</span>)</span>
+<span id="cb16-402"><a href="#cb16-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(fA)</span>
+<span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">New Predictor(s): &quot;</span>)</span>
+<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(fB)</span>
+<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb16-406"><a href="#cb16-406" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-407"><a href="#cb16-407" aria-hidden="true" tabindex="-1"></a>  fstats <span class="ot">&lt;-</span> x<span class="sc">$</span>stats</span>
+<span id="cb16-408"><a href="#cb16-408" aria-hidden="true" tabindex="-1"></a>  pcol   <span class="ot">&lt;-</span> <span class="fu">names</span>(fstats)[<span class="fu">grep</span>(<span class="st">&#39;Pval&#39;</span>, <span class="fu">names</span>(fstats))]  <span class="co"># pval columns</span></span>
+<span id="cb16-409"><a href="#cb16-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-410"><a href="#cb16-410" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; z() taken from print.ImpactPO</span></span>
+<span id="cb16-411"><a href="#cb16-411" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits=</span><span class="dv">0</span>, <span class="at">pval=</span><span class="cn">FALSE</span>) {</span>
+<span id="cb16-412"><a href="#cb16-412" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="cf">if</span>(pval) <span class="fu">ifelse</span>(x <span class="sc">&lt;</span> <span class="fl">0.0001</span>, <span class="st">&#39;&lt;0.0001&#39;</span>, <span class="fu">format</span>(<span class="fu">round</span>(x, <span class="dv">4</span>)))</span>
+<span id="cb16-413"><a href="#cb16-413" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="fu">format</span>(<span class="cf">if</span>(digits <span class="sc">==</span> <span class="dv">0</span>) x <span class="cf">else</span> <span class="fu">round</span>(x, digits))</span>
+<span id="cb16-414"><a href="#cb16-414" aria-hidden="true" tabindex="-1"></a>    y[<span class="fu">is.na</span>(x)] <span class="ot">&lt;-</span> <span class="st">&#39;&#39;</span></span>
+<span id="cb16-415"><a href="#cb16-415" aria-hidden="true" tabindex="-1"></a>    y</span>
+<span id="cb16-416"><a href="#cb16-416" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-417"><a href="#cb16-417" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-418"><a href="#cb16-418" aria-hidden="true" tabindex="-1"></a>  <span class="co"># fix formatting </span></span>
+<span id="cb16-419"><a href="#cb16-419" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> pcol)                          fstats[[j]] <span class="ot">&lt;-</span> <span class="fu">z</span>(fstats[[j]], <span class="at">pval =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-420"><a href="#cb16-420" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(fstats), pcol))  fstats[[j]] <span class="ot">&lt;-</span> <span class="fu">z</span>(fstats[[j]], <span class="dv">3</span>)</span>
+<span id="cb16-421"><a href="#cb16-421" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-422"><a href="#cb16-422" aria-hidden="true" tabindex="-1"></a>  fstats <span class="ot">&lt;-</span> <span class="fu">t</span>(fstats)</span>
+<span id="cb16-423"><a href="#cb16-423" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(fstats) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Values&quot;</span>)</span>
+<span id="cb16-424"><a href="#cb16-424" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-425"><a href="#cb16-425" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(x<span class="sc">$</span>nboot <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb16-426"><a href="#cb16-426" aria-hidden="true" tabindex="-1"></a>    boot <span class="ot">&lt;-</span> x<span class="sc">$</span>boot</span>
 <span id="cb16-427"><a href="#cb16-427" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-428"><a href="#cb16-428" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">&#39;</span><span class="sc">\n</span><span class="st">Bootstrap 0.95 confidence intervals for Adequacy Index </span><span class="sc">\n</span><span class="st">and REV yardsticks based on&#39;</span>, x<span class="sc">$</span>nboot, <span class="st">&#39;bootstraps</span><span class="sc">\n\n</span><span class="st">&#39;</span>)</span>
+<span id="cb16-428"><a href="#cb16-428" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">head</span>(fstats, <span class="sc">-</span><span class="fu">dim</span>(boot)[[<span class="dv">2</span>]]), <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb16-429"><a href="#cb16-429" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-430"><a href="#cb16-430" aria-hidden="true" tabindex="-1"></a>    cl <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb16-431"><a href="#cb16-431" aria-hidden="true" tabindex="-1"></a>      qu <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">quantile</span>(x, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)))</span>
-<span id="cb16-432"><a href="#cb16-432" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="at">Lower=</span>qu[<span class="dv">1</span>], <span class="at">Upper=</span>qu[<span class="dv">2</span>]) }</span>
-<span id="cb16-433"><a href="#cb16-433" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-434"><a href="#cb16-434" aria-hidden="true" tabindex="-1"></a>    bb     <span class="ot">&lt;-</span> <span class="fu">round</span> (<span class="fu">apply</span>(boot, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">cl</span>(x) ) , <span class="dv">3</span>) </span>
-<span id="cb16-435"><a href="#cb16-435" aria-hidden="true" tabindex="-1"></a>    cstats <span class="ot">&lt;-</span> <span class="fu">t</span>(bb)  </span>
-<span id="cb16-436"><a href="#cb16-436" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-437"><a href="#cb16-437" aria-hidden="true" tabindex="-1"></a>    ci_stats <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">tail</span>(fstats, <span class="fu">dim</span>(boot)[[<span class="dv">2</span>]]), cstats)</span>
-<span id="cb16-438"><a href="#cb16-438" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(ci_stats, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb16-439"><a href="#cb16-439" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-440"><a href="#cb16-440" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span>  <span class="fu">print</span>(fstats, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb16-441"><a href="#cb16-441" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-442"><a href="#cb16-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>()</span>
+<span id="cb16-430"><a href="#cb16-430" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">&#39;</span><span class="sc">\n</span><span class="st">Bootstrap 0.95 confidence intervals for Adequacy Index </span><span class="sc">\n</span><span class="st">and REV yardsticks based on&#39;</span>, x<span class="sc">$</span>nboot, <span class="st">&#39;bootstraps</span><span class="sc">\n\n</span><span class="st">&#39;</span>)</span>
+<span id="cb16-431"><a href="#cb16-431" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-432"><a href="#cb16-432" aria-hidden="true" tabindex="-1"></a>    cl <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb16-433"><a href="#cb16-433" aria-hidden="true" tabindex="-1"></a>      qu <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">quantile</span>(x, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)))</span>
+<span id="cb16-434"><a href="#cb16-434" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="at">Lower=</span>qu[<span class="dv">1</span>], <span class="at">Upper=</span>qu[<span class="dv">2</span>]) }</span>
+<span id="cb16-435"><a href="#cb16-435" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-436"><a href="#cb16-436" aria-hidden="true" tabindex="-1"></a>    bb     <span class="ot">&lt;-</span> <span class="fu">round</span> (<span class="fu">apply</span>(boot, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">cl</span>(x) ) , <span class="dv">3</span>) </span>
+<span id="cb16-437"><a href="#cb16-437" aria-hidden="true" tabindex="-1"></a>    cstats <span class="ot">&lt;-</span> <span class="fu">t</span>(bb)  </span>
+<span id="cb16-438"><a href="#cb16-438" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-439"><a href="#cb16-439" aria-hidden="true" tabindex="-1"></a>    ci_stats <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">tail</span>(fstats, <span class="fu">dim</span>(boot)[[<span class="dv">2</span>]]), cstats)</span>
+<span id="cb16-440"><a href="#cb16-440" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(ci_stats, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-441"><a href="#cb16-441" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-442"><a href="#cb16-442" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span>  <span class="fu">print</span>(fstats, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb16-443"><a href="#cb16-443" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-444"><a href="#cb16-444" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb16-445"><a href="#cb16-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-446"><a href="#cb16-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-444"><a href="#cb16-444" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>()</span>
+<span id="cb16-445"><a href="#cb16-445" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-446"><a href="#cb16-446" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb16-447"><a href="#cb16-447" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-448"><a href="#cb16-448" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-449"><a href="#cb16-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-450"><a href="#cb16-450" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Plot Result from Happy</span></span>
-<span id="cb16-451"><a href="#cb16-451" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb16-452"><a href="#cb16-452" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param x </span></span>
-<span id="cb16-453"><a href="#cb16-453" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param ... </span></span>
-<span id="cb16-454"><a href="#cb16-454" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb16-455"><a href="#cb16-455" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return</span></span>
-<span id="cb16-456"><a href="#cb16-456" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
-<span id="cb16-457"><a href="#cb16-457" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb16-458"><a href="#cb16-458" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
-<span id="cb16-459"><a href="#cb16-459" aria-hidden="true" tabindex="-1"></a>plot.Happy <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb16-460"><a href="#cb16-460" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-461"><a href="#cb16-461" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-462"><a href="#cb16-462" aria-hidden="true" tabindex="-1"></a>  pred_A <span class="ot">&lt;-</span> x<span class="sc">$</span>ypred_A</span>
-<span id="cb16-463"><a href="#cb16-463" aria-hidden="true" tabindex="-1"></a>  pred_AB <span class="ot">&lt;-</span> x<span class="sc">$</span>ypred_AB</span>
-<span id="cb16-464"><a href="#cb16-464" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-465"><a href="#cb16-465" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; codes taken from blog article</span></span>
-<span id="cb16-466"><a href="#cb16-466" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; </span><span class="al">TODO</span><span class="co">: include the additional plots outlined in blog article + Datamethods</span></span>
-<span id="cb16-467"><a href="#cb16-467" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mgp=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb16-468"><a href="#cb16-468" aria-hidden="true" tabindex="-1"></a>  xlab <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&#39;Old Predictor(s)</span><span class="sc">\n</span><span class="st">variance=&#39;</span>,       <span class="fu">round</span>(<span class="fu">var</span>(pred_A), <span class="dv">3</span>)),</span>
-<span id="cb16-469"><a href="#cb16-469" aria-hidden="true" tabindex="-1"></a>            <span class="fu">paste0</span>(<span class="st">&#39;Old + New Predictors</span><span class="sc">\n</span><span class="st">variance=&#39;</span>, <span class="fu">round</span>(<span class="fu">var</span>(pred_AB), <span class="dv">3</span>)))</span>
-<span id="cb16-470"><a href="#cb16-470" aria-hidden="true" tabindex="-1"></a>  <span class="fu">histbackback</span>(pred_A, pred_AB, <span class="at">brks=</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by=</span><span class="fl">0.02</span>), <span class="at">xlab=</span>xlab, <span class="at">ylab=</span><span class="st">&#39;Prob(Y)&#39;</span>)</span>
-<span id="cb16-471"><a href="#cb16-471" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-472"><a href="#cb16-472" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-473"><a href="#cb16-473" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-474"><a href="#cb16-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-475"><a href="#cb16-475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-450"><a href="#cb16-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-451"><a href="#cb16-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-452"><a href="#cb16-452" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Plot Result from Happy</span></span>
+<span id="cb16-453"><a href="#cb16-453" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb16-454"><a href="#cb16-454" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param x </span></span>
+<span id="cb16-455"><a href="#cb16-455" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param ... </span></span>
+<span id="cb16-456"><a href="#cb16-456" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb16-457"><a href="#cb16-457" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return</span></span>
+<span id="cb16-458"><a href="#cb16-458" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb16-459"><a href="#cb16-459" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb16-460"><a href="#cb16-460" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
+<span id="cb16-461"><a href="#cb16-461" aria-hidden="true" tabindex="-1"></a>plot.Happy <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb16-462"><a href="#cb16-462" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-463"><a href="#cb16-463" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-464"><a href="#cb16-464" aria-hidden="true" tabindex="-1"></a>  pred_A <span class="ot">&lt;-</span> x<span class="sc">$</span>ypred_A</span>
+<span id="cb16-465"><a href="#cb16-465" aria-hidden="true" tabindex="-1"></a>  pred_AB <span class="ot">&lt;-</span> x<span class="sc">$</span>ypred_AB</span>
+<span id="cb16-466"><a href="#cb16-466" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-467"><a href="#cb16-467" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; codes taken from blog article</span></span>
+<span id="cb16-468"><a href="#cb16-468" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; </span><span class="al">TODO</span><span class="co">: include the additional plots outlined in blog article + Datamethods</span></span>
+<span id="cb16-469"><a href="#cb16-469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mgp=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb16-470"><a href="#cb16-470" aria-hidden="true" tabindex="-1"></a>  xlab <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&#39;Old Predictor(s)</span><span class="sc">\n</span><span class="st">variance=&#39;</span>,       <span class="fu">round</span>(<span class="fu">var</span>(pred_A), <span class="dv">3</span>)),</span>
+<span id="cb16-471"><a href="#cb16-471" aria-hidden="true" tabindex="-1"></a>            <span class="fu">paste0</span>(<span class="st">&#39;Old + New Predictors</span><span class="sc">\n</span><span class="st">variance=&#39;</span>, <span class="fu">round</span>(<span class="fu">var</span>(pred_AB), <span class="dv">3</span>)))</span>
+<span id="cb16-472"><a href="#cb16-472" aria-hidden="true" tabindex="-1"></a>  <span class="fu">histbackback</span>(pred_A, pred_AB, <span class="at">brks=</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by=</span><span class="fl">0.02</span>), <span class="at">xlab=</span>xlab, <span class="at">ylab=</span><span class="st">&#39;Prob(Y)&#39;</span>)</span>
+<span id="cb16-473"><a href="#cb16-473" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-474"><a href="#cb16-474" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-475"><a href="#cb16-475" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb16-476"><a href="#cb16-476" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-477"><a href="#cb16-477" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-478"><a href="#cb16-478" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-478"><a href="#cb16-478" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-479"><a href="#cb16-479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-480"><a href="#cb16-480" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-480"><a href="#cb16-480" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-481"><a href="#cb16-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-482"><a href="#cb16-482" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

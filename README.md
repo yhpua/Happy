@@ -21,4 +21,4 @@ functions from the [`rms` R package](https://github.com/harrelfe/rms).
     [Datamethods](https://discourse.datamethods.org/t/statistically-efficient-ways-to-quantify-added-predictive-value-of-new-measurements/2013),
     powerful likelihood ratio (LR)-based yardsticks like Adequacy Index
     (AI) and Relative Explained Variation (REV) have made many
-    biomedical researchers very happy.
+    biomedical researchers very happy 🙂.
